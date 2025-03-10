@@ -1,0 +1,25 @@
+{
+  "name": "id-card",
+  "version": "1.0.0",
+  "main": "start.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "pkg start.js --targets node18-win-x64 --output id.exe",
+    "open": "open-cli http://localhost:3000"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "open-cli": "^8.0.0",
+    "sqlite3": "^5.1.7"
+  },
+  "pkg": {
+    "assets": [
+      "frontend/**/*",
+      "database/students.db"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ]
+  }
+}

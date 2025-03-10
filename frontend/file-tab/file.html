@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Modal Demo</title>
+    <link rel="stylesheet" href="../file-tab/modalfile.css">
+    <style>
+        /* Additional styles for demo purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px;
+        }
+        
+        .demo-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Button to Open Modal -->
+    <button class="demo-button" onclick="openModal()">View Student Details</button>
+
+    <!-- Student Modal -->
+    <div class="student-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Student Details</h2>
+            <div class="student-preview">
+                <div class="preview-photo">
+                    <img src="/api/placeholder/120/150" alt="Student Photo">
+                </div>
+                <div class="preview-details">
+                    <p><strong>Roll Number:</strong> BC2024001</p>
+                    <p><strong>Name:</strong> John Doe</p>
+                    <p><strong>Father's Name:</strong> Richard Doe</p>
+                    <p><strong>Course:</strong> B.Sc.</p>
+                    <p><strong>Blood Group:</strong> O+</p>
+                    <p><strong>Contact Number:</strong> 1234567890</p>
+                    <p><strong>Issue Date:</strong> 2024-02-19</p>
+                    <p><strong>Session:</strong> 2024-25</p>
+                </div>
+            </div>
+            <div class="signature-preview">
+                <p><strong>Signature:</strong></p>
+                <img src="/api/placeholder/200/50" alt="Student Signature">
+            </div>
+            <button class="print-modal-btn">Print ID Card</button>
+        </div>
+    </div>
+
+    <!-- Empty Student List Demo -->
+    <div id="studentList">
+        <p class="no-data">No student records found</p>
+    </div>
+
+    <script>
+        function openModal() {
+            document.querySelector('.student-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.querySelector('.student-modal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            const modal = document.querySelector('.student-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

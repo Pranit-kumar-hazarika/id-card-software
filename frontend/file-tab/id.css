@@ -1,0 +1,241 @@
+/* ID Card Section */
+.id-card-section {
+    width: 8.6cm;
+    height: 5.4cm;
+    background: white;
+    padding: 0px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* ID Header */
+.id-header {
+    background: #0a1880;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:1px 0;
+    font-size: 7px;
+    width: 328px;
+    height: 35px; /* Increased height */
+    box-sizing: border-box;
+    margin:0 ; /* Remove margin */
+    position: relative;
+    top: 0; /* Ensure it's at the top */
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px ;
+}
+
+.id-header img {
+    width: 30px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.id-header div h2 {
+    font-size: 12px;
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    font-weight: bold;
+}
+
+.id-header div h3 {
+    font-size: 8px;
+    font-family: "Times New Roman";
+    margin: -2px 0 0 0;
+}
+
+.id-header div p {
+    font-size: 6px;
+    font-family: "Times New Roman";
+    margin: 0;
+    line-height: 1;
+} 
+#id-session {
+    top: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 7px;
+    line-height: 1;
+    margin-right:13px;
+}
+
+#id-session .session-year {
+    font-size: 6px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* ID Body */
+.id-body {
+    display: flex;
+    height: 90px;
+    width: 310px;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1px;
+    box-sizing: border-box;
+    margin-top: 7px;
+}
+
+.id-photo {
+    width: 70px;
+    height: 80px;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 10px;
+}
+
+/* Issue Date Below Photo */
+.issue-date {
+    text-align: center;
+    font-size: 5px;
+    margin-top: 2px;
+    color: #333;
+}
+
+/* Student Details */
+.details {
+    text-align: left;
+    margin-left: 15px;
+    font-size: 10px;
+    flex-grow: 1;
+    margin-top: 6px;
+}
+
+.details .id-title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.details p {
+    margin: 3px 0;
+    line-height: 1.1;
+}
+
+.details p strong {
+    font-weight: bold;
+}
+.details strong {
+    display: inline-block;
+    width: 80px;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+#barcode {
+    width: 160px;
+    height: 35px;
+    margin-top: 20px;
+}
+
+/* Signature Box - Horizontal Layout */
+.signature-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    padding-top: 2px;
+    box-sizing: border-box;
+    margin-top: -35px;
+}
+
+.signature-s {
+    width: 50px;
+    height: 15px;
+    object-fit: contain;
+}
+.signature-a {
+    width: 50px;
+    height: 15px;
+    object-fit: contain;
+    margin-left: 155px;
+}
+
+.signature-st {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 2px;
+}
+
+.signature-st p {
+    font-size: 7px;
+    margin: 2px 0 0 0;
+    text-align: center;
+    margin-left: 1px;
+
+}
+
+.signature-au {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 2px;
+}
+
+.signature-au p {
+    font-size: 7px;
+    margin: 2px 0 0 0;
+    text-align: center;
+    margin-left: 164px;
+}
+
+/* Footer Note */
+.note {
+    font-size: 5px;
+    font-weight: bold;
+    color: rgb(254, 0, 0);
+    box-sizing: border-box;
+    margin-top: -5px;
+}
+
+/* Print Styles */
+@media print {
+    .id-card-section {
+        width: 8.6cm;
+        height: 5.4cm;
+        border: none;
+        margin: auto;
+        box-shadow: none;
+        page-break-after: avoid;
+    }
+
+    #print {
+        display: none;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    @page {
+        size: 8.6cm 5.4cm;
+        margin: 0;
+    }
+}

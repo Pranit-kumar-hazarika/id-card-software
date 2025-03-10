@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student ID Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <a href="#">
+                <img src="./image/BClogo.png" alt="Bahona College Symbol">
+            </a>
+            <ul class="nav-links">
+                <li><a href="./index.html" class="animated-button">ID</a></li>
+                <li><a href="./file-tab/file1.html" class="animated-button">Files</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Student ID Generator Section -->
+    <section class="container">
+        <!-- Input Form -->
+        <div class="form-section">
+            <h2>Student Details</h2>
+            <p>Fill in the details to generate your digital student ID.</p>
+
+            <input type="text" id="roll" placeholder="Enter student roll number" required>
+            <input type="text" id="name" placeholder="Enter student name" required>
+            <input type="text" id="fathername" placeholder="Enter Father's name" required>
+            <input type="text" id="course" placeholder="Enter course" required>
+            <input type="text" id="blood-group" placeholder="Enter Blood Group" required>
+            <input type="text" id="contact-number" placeholder="Enter Contact Number" required>
+            <label for="text">Date of Issue:</label>
+            <input type="date" id="issue-date" placeholder="Enter Date of Issue" required>
+            <label for="text">Enter Session:</label>
+            <input type="text" id="sessionInput" placeholder="Session:YYYY-YY" maxlength="9" />
+
+            <label for="text">Upload Photo:</label>
+            <input type="file" id="photo" accept="image/*">
+
+            <label for="text">Upload Signature:</label>
+            <input type="file" id="signature" accept="image/*">
+            
+
+            <div class="buttons">
+                <button id="reset">Reset</button>
+                <button id="generate">Generate ID Card</button>
+            </div>
+        </div>
+
+        <!-- ID Card Section -->
+        <div class="id-card-section" id="id-card">
+            <!-- Header -->
+            <div class="id-header">
+                <img src="./image/BClogo.png" alt="College Logo">
+                <div>
+                    <h2>BAHONA COLLEGE</h2>
+                    <h3>বাহনা মহাবিদ্যালয়</h3>
+                    <p>Affiliated to Dibrugarh University <br> PO: Bahona, Jorhat, Assam - 785101</p>
+                </div>
+                <span id="id-session">SESSION<br><span class="session-year">YYYY-YY</span></span>
+            </div>
+
+            <!-- Main Body -->
+            <div class="id-body">
+                <div class="photo-date-section">
+                    <!-- Student Photo -->
+                    <img id="id-photo" class="id-photo" src="image/default-photo.png" alt="Student Photo">
+
+                    <!-- Date of Issue Below the Photo -->
+                    <div class="issue-date">
+                        <strong>Date of Issue:</strong> <span id="id-issue-date">XX-XX-XXXX</span>
+                    </div>
+                </div>
+
+                <!-- Student Details -->
+                <div class="details">
+                    <div class="id-title">COLLEGE ID CUM LIBRARY CARD</div>
+                    <p><strong>Roll Number</strong>: <span id="id-roll">XXXXX</span></p>
+                    <p><strong>Name</strong>: <span id="id-name">XXXXX</span></p>
+                    <p><strong>Father's Name</strong>: <span id="id-fathername">XXXXX</span></p>
+                    <p><strong>Course</strong>: <span id="id-course">XXXXX</span></p>
+                    <p><strong>Blood Group</strong>: <span id="id-blood-group">XXXXX</span></p>
+                    <p><strong>Contact Number</strong>: <span id="id-contact-number">XXXXX</span></p>
+                </div>
+            </div>
+                                <!-- Barcode -->
+                                <div class="barcode-box">
+                                    <svg id="barcode"></svg>
+                                </div>
+
+            <!-- Signature, Barcode & Authority Signature in One Line -->
+            <div class="footer-line">
+                <div class="signature-box">
+                    <!-- Card Holder Signature -->
+                    <div class="signature-st">
+                        <img id="signature-holder" class="signature-s" src="image/default-signature.png" alt="Card Holder Signature">
+                        <p>Signature of the Card<br>Holder</p>
+                    </div>
+
+                    <!-- Issuing Authority Signature -->
+                    <div class="signature-au">
+                        <img src="./image/Ausign.jpg" class="signature-a" alt="Issuer Signature">
+                        <p>Signature of the Issuing<br>Authority</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Note --> 
+            <div class="footer">
+                <p class="note">N.B:Kindly submit the card after the completion of the course.<br>© Developed by Computer Science Dept, Bahona College</p>
+                <button id="print" onclick="printIDCard()">Print ID Card</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2025 Bahona College. All rights reserved.</p>
+        <p>Developed by Computer Science Department.</p>
+    </footer>
+
+
+    <script src="script.js" defer></script>
+</body>
+</html>
