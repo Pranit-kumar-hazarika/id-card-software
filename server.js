@@ -54,15 +54,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 console.log('Students table ready');
 
                 // 🔧 Add 'category' column if not already present
-                db.get("PRAGMA table_info(students);", (err, columns) => {
+                db.all("PRAGMA table_info(students);", (err, columns) => {
                     if (err) {
                         console.error('Failed to check columns', err.message);
                         return;
                     }
 
-                    const hasCategory = Array.isArray(columns)
-                        ? columns.some(col => col.name === "category")
-                        : false;
+                    const hasCategory = columns.some(col => col.name === "category");
 
                     if (!hasCategory) {
                         db.run("ALTER TABLE students ADD COLUMN category TEXT", (err) => {
@@ -76,6 +74,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
                         console.log("Category column already exists.");
                     }
                 });
+
             }
         });
 
@@ -87,7 +86,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // Get all students
 app.get('/api/students', (_req, res) => {
-    db.all('SELECT id, roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, createdAt FROM students ORDER BY id DESC', [], (err, rows) => {
+    db.all('SELECT id, roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, category, createdAt FROM students ORDER BY id DESC', [], (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
@@ -132,7 +131,7 @@ app.get('/api/students/search', (req, res) => {
 
 // Create a new student
 app.post('/api/students', (req, res) => {
-    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature } = req.body;
+    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, studentCategory } = req.body;
 
     // Validate required fields
     if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
@@ -147,24 +146,25 @@ app.post('/api/students', (req, res) => {
     }
 
     const query = `INSERT INTO students 
-                  (roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  (roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature], function (err) {
-        if (err) {
-            if (err.message.includes('UNIQUE constraint failed')) {
-                res.status(409).json({ error: 'A student with this roll number already exists' });
-            } else {
-                res.status(500).json({ error: err.message });
+    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, studentCategory],
+        function (err) {
+            if (err) {
+                if (err.message.includes('UNIQUE constraint failed')) {
+                    res.status(409).json({ error: 'A student with this roll number already exists' });
+                } else {
+                    res.status(500).json({ error: err.message });
+                }
+                return;
             }
-            return;
-        }
 
-        res.status(201).json({
-            id: this.lastID,
-            message: 'Student created successfully'
+            res.status(201).json({
+                id: this.lastID,
+                message: 'Student created successfully'
+            });
         });
-    });
 });
 
 // Update student
@@ -247,6 +247,19 @@ app.get('/api/export/json', (_req, res) => {
         res.json(rows);
     });
 });
+
+// Get students by category
+app.get('/api/students/category/:category', (req, res) => {
+    const { category } = req.params;
+    db.all('SELECT * FROM students WHERE category = ?', [category], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json(rows);
+    });
+});
+
 
 // Server startup
 app.listen(PORT, () => {

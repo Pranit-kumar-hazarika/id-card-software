@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => { 
+document.addEventListener("DOMContentLoaded", () => {
     const rollInput = document.getElementById("roll");
     const nameInput = document.getElementById("name");
     const fathernameInput = document.getElementById("fathername");
@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const signatureHolder = document.getElementById("signature-holder");
     const barcode = document.getElementById("barcode");
     const idSession = document.getElementById("id-session");
+    const studentCategory = document.getElementById("studentCategory").value;
+
 
     const generateBtn = document.getElementById("generate");
     const resetBtn = document.getElementById("reset");
@@ -131,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Print and Save Data to Database
     printBtn.addEventListener("click", async () => {
-        // Collect student data
         const roll = rollInput.value.trim();
         const name = nameInput.value.trim();
         const fathername = fathernameInput.value.trim();
@@ -140,20 +141,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const contactNumber = contactNumberInput.value.trim();
         const issueDate = issueDateInput.value.trim();
         const session = sessionInput.value.trim();
-        
-        // Validate before saving
-        if (!roll || !name || !fathername || !course || 
-            !bloodGroup || !contactNumber || !issueDate || !session) {
+        const studentCategory = document.getElementById("studentCategory").value;
+        console.log("Saving student with category:", studentCategory);
+
+        if (!roll || !name || !fathername || !course ||
+            !bloodGroup || !contactNumber || !issueDate || !session || !studentCategory) {
             alert("Please fill in all fields before printing!");
             return;
         }
-        
-        // Get base64 data for images
+
         const photo = idPhoto.src;
         const signature = signatureHolder.src;
-        
+
         try {
-            // Save to backend database
             const response = await fetch(`http://localhost:3000/api/students`, {
                 method: 'POST',
                 headers: {
@@ -168,34 +168,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     contactNumber,
                     issueDate,
                     session,
+                    category: studentCategory, // ✅ Correct key for database
                     photo,
                     signature
                 })
+
             });
-            
+
             const data = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(data.error || 'Failed to save student data');
             }
-            
-            // Print the ID card
+
             const printContent = document.querySelector(".id-card-section").outerHTML;
             const originalContent = document.body.innerHTML;
 
             document.body.innerHTML = `<div style="width: 86mm; height: 54mm; margin: auto;">${printContent}</div>`;
             window.print();
             document.body.innerHTML = originalContent;
-            
-            // Reload the page after printing
+
             setTimeout(() => {
                 window.location.reload();
             }, 500);
-            
+
         } catch (error) {
             alert(`Error: ${error.message}`);
             console.error('Error saving student data:', error);
         }
     });
-});
 
+});

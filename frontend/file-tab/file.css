@@ -241,3 +241,19 @@ button:hover {
 .print-modal-btn:hover {
     background-color: #0056b3;
 }
+
+.category-title {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #f0f0f0;
+    color: #333;
+    border-left: 4px solid #4c88d2;
+}
+.dropdown-filter {
+    padding: 8px;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
