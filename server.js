@@ -33,26 +33,52 @@ const db = new sqlite3.Database(dbPath, (err) => {
     } else {
         console.log('Connected to the SQLite database');
         // Create students table if it doesn't exist
+        // Create 'students' table if not exists
         db.run(`CREATE TABLE IF NOT EXISTS students (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            roll TEXT UNIQUE NOT NULL,
-            name TEXT NOT NULL,
-            fathername TEXT NOT NULL,
-            course TEXT NOT NULL,
-            bloodGroup TEXT NOT NULL,
-            contactNumber TEXT NOT NULL,
-            issueDate TEXT NOT NULL,
-            session TEXT NOT NULL,
-            photo TEXT,
-            signature TEXT,
-            createdAt TEXT DEFAULT CURRENT_TIMESTAMP
-        )`, (err) => {
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    roll TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    fathername TEXT NOT NULL,
+    course TEXT NOT NULL,
+    bloodGroup TEXT NOT NULL,
+    contactNumber TEXT NOT NULL,
+    issueDate TEXT NOT NULL,
+    session TEXT NOT NULL,
+    photo TEXT,
+    signature TEXT,
+    createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+)`, (err) => {
             if (err) {
                 console.error('Error creating table', err.message);
             } else {
                 console.log('Students table ready');
+
+                // 🔧 Add 'category' column if not already present
+                db.get("PRAGMA table_info(students);", (err, columns) => {
+                    if (err) {
+                        console.error('Failed to check columns', err.message);
+                        return;
+                    }
+
+                    const hasCategory = Array.isArray(columns)
+                        ? columns.some(col => col.name === "category")
+                        : false;
+
+                    if (!hasCategory) {
+                        db.run("ALTER TABLE students ADD COLUMN category TEXT", (err) => {
+                            if (err) {
+                                console.error('Failed to add category column:', err.message);
+                            } else {
+                                console.log("Category column added to students table.");
+                            }
+                        });
+                    } else {
+                        console.log("Category column already exists.");
+                    }
+                });
             }
         });
+
     }
 });
 
@@ -90,9 +116,9 @@ app.get('/api/students/roll/:roll', (req, res) => {
 app.get('/api/students/search', (req, res) => {
     const { term } = req.query;
     const searchTerm = `%${term}%`;
-    
+
     db.all(
-        'SELECT id, roll, name, fathername, course FROM students WHERE roll LIKE ? OR name LIKE ?', 
+        'SELECT id, roll, name, fathername, course FROM students WHERE roll LIKE ? OR name LIKE ?',
         [searchTerm, searchTerm],
         (err, rows) => {
             if (err) {
@@ -107,13 +133,13 @@ app.get('/api/students/search', (req, res) => {
 // Create a new student
 app.post('/api/students', (req, res) => {
     const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature } = req.body;
-    
+
     // Validate required fields
     if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
         res.status(400).json({ error: 'All fields are required' });
         return;
     }
-    
+
     // Validate contact number format (10 digits)
     if (!/^\d{10}$/.test(contactNumber)) {
         res.status(400).json({ error: 'Contact number must be 10 digits' });
@@ -123,8 +149,8 @@ app.post('/api/students', (req, res) => {
     const query = `INSERT INTO students 
                   (roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature], function(err) {
+
+    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature], function (err) {
         if (err) {
             if (err.message.includes('UNIQUE constraint failed')) {
                 res.status(409).json({ error: 'A student with this roll number already exists' });
@@ -133,8 +159,8 @@ app.post('/api/students', (req, res) => {
             }
             return;
         }
-        
-        res.status(201).json({ 
+
+        res.status(201).json({
             id: this.lastID,
             message: 'Student created successfully'
         });
@@ -145,7 +171,7 @@ app.post('/api/students', (req, res) => {
 app.put('/api/students/:id', (req, res) => {
     const { id } = req.params;
     const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature } = req.body;
-    
+
     // Validate required fields
     if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
         res.status(400).json({ error: 'All fields are required' });
@@ -157,18 +183,18 @@ app.put('/api/students/:id', (req, res) => {
                   bloodGroup = ?, contactNumber = ?, issueDate = ?, session = ?,
                   photo = ?, signature = ?
                   WHERE id = ?`;
-    
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, id], function(err) {
+
+    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, id], function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
         }
-        
+
         if (this.changes === 0) {
             res.status(404).json({ error: 'Student not found' });
             return;
         }
-        
+
         res.json({ message: 'Student updated successfully' });
     });
 });
@@ -176,31 +202,31 @@ app.put('/api/students/:id', (req, res) => {
 // Delete student
 app.delete('/api/students/:id', (req, res) => {
     const { id } = req.params;
-    
-    db.run('DELETE FROM students WHERE id = ?', [id], function(err) {
+
+    db.run('DELETE FROM students WHERE id = ?', [id], function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
         }
-        
+
         if (this.changes === 0) {
             res.status(404).json({ error: 'Student not found' });
             return;
         }
-        
+
         res.json({ message: 'Student deleted successfully' });
     });
 });
 
 // Delete all students
 app.delete('/api/students', (_req, res) => {
-    db.run('DELETE FROM students', function(err) {
+    db.run('DELETE FROM students', function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
         }
-        
-        res.json({ 
+
+        res.json({
             message: 'All students deleted successfully',
             deletedCount: this.changes
         });
@@ -214,7 +240,7 @@ app.get('/api/export/json', (_req, res) => {
             res.status(500).json({ error: err.message });
             return;
         }
-        
+
         // Set headers for file download
         res.setHeader('Content-Disposition', 'attachment; filename=students.json');
         res.setHeader('Content-Type', 'application/json');

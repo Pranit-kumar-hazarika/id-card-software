@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <header>
@@ -27,6 +29,17 @@
         <div class="form-section">
             <h2>Student Details</h2>
             <p>Fill in the details to generate your digital student ID.</p>
+            <div class="form-group">
+                <label for="studentCategory">Student Category:</label>
+                <select name="studentCategory" id="studentCategory" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="HS/Arts">HS - Arts</option>
+                    <option value="HS/Science">HS - Science</option>
+                    <option value="Degree/BA">Degree - BA</option>
+                    <option value="Degree/BSc">Degree - BSc</option>
+                </select>
+            </div>
+
 
             <input type="text" id="roll" placeholder="Enter student roll number" required>
             <input type="text" id="name" placeholder="Enter student name" required>
@@ -44,7 +57,7 @@
 
             <label for="text">Upload Signature:</label>
             <input type="file" id="signature" accept="image/*">
-            
+
 
             <div class="buttons">
                 <button id="reset">Reset</button>
@@ -88,17 +101,18 @@
                     <p><strong>Contact Number</strong>: <span id="id-contact-number">XXXXX</span></p>
                 </div>
             </div>
-                                <!-- Barcode -->
-                                <div class="barcode-box">
-                                    <svg id="barcode"></svg>
-                                </div>
+            <!-- Barcode -->
+            <div class="barcode-box">
+                <svg id="barcode"></svg>
+            </div>
 
             <!-- Signature, Barcode & Authority Signature in One Line -->
             <div class="footer-line">
                 <div class="signature-box">
                     <!-- Card Holder Signature -->
                     <div class="signature-st">
-                        <img id="signature-holder" class="signature-s" src="image/default-signature.png" alt="Card Holder Signature">
+                        <img id="signature-holder" class="signature-s" src="image/default-signature.png"
+                            alt="Card Holder Signature">
                         <p>Signature of the Card<br>Holder</p>
                     </div>
 
@@ -110,9 +124,10 @@
                 </div>
             </div>
 
-            <!-- Footer Note --> 
+            <!-- Footer Note -->
             <div class="footer">
-                <p class="note">N.B:Kindly submit the card after the completion of the course.<br>© Developed by Computer Science Dept, Bahona College</p>
+                <p class="note">N.B:Kindly submit the card after the completion of the course.<br>© Developed by
+                    Computer Science Dept, Bahona College</p>
                 <button id="print" onclick="printIDCard()">Print ID Card</button>
             </div>
         </div>
@@ -125,4 +140,5 @@
 
     <script src="script.js" defer></script>
 </body>
+
 </html>
