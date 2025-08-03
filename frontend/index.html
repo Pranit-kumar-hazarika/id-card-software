@@ -12,14 +12,15 @@
 <body>
     <!-- Navigation Bar -->
     <header>
-        <nav>
-            <a href="#">
-                <img src="./image/BClogo.png" alt="Bahona College Symbol">
-            </a>
-            <ul class="nav-links">
-                <li><a href="./index.html" class="animated-button">ID</a></li>
-                <li><a href="./file-tab/file1.html" class="animated-button">Files</a></li>
-            </ul>
+        <nav class="navbar">
+            <div class="nav-left">
+                <img src="image/BClogo.png" alt="Logo" class="logo">
+                <span class="brand">Bahona College</span>
+            </div>
+            <div class="nav-right">
+                <span><a href="./index.html" class="nav-item desktop">ID PAGE</a></span>
+                <span><a href="./file-tab/file1.html" class="nav-item desktop">FILES</a></span>
+            </div>
         </nav>
     </header>
 
@@ -132,11 +133,33 @@
             </div>
         </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Bahona College. All rights reserved.</p>
-        <p>Developed by Computer Science Department.</p>
-    </footer>
+    <footer class="cs-footer">
+        <div class="cs-footer-container">
+            <div class="cs-footer-left">
+                <img src="image/BClogo.png" alt="Bahona College Logo" class="cs-footer-logo">
+                <p><strong>ID Card Generator</strong> powered by the Computer Science Department of Bahona College —
+                    ensuring identity, security, and innovation for all students.</p>
+                <div class="cs-social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a
+                        href="https://www.instagram.com/computersciencedept_bahona?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
 
+            <div class="cs-footer-contact">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Bahona College, Jorhat, Assam 785101</p>
+                <p><i class="fas fa-phone-alt"></i> +91 6003519694</p>
+            </div>
+        </div>
+
+        <div class="cs-footer-bottom">
+            <p>© 2025 Bahona College ID Generator | Developed by the Computer Science Department</p>
+        </div>
+    </footer>
 
     <script src="script.js" defer></script>
 </body>

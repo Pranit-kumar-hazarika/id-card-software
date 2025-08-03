@@ -13,41 +13,43 @@
 
     <!-- Navigation Bar -->
     <header>
-        <nav>
-            <a href="#">
-                <img src="../image/BClogo.png" alt="Bahona College Symbol">
-            </a>
-            <ul class="nav-links">
-                <li><a href="../index.html" class="animated-button">ID</a></li>
-                <li><a href="../file-tab/file1.html" class="animated-button">Files</a></li>
-            </ul>
-        </nav>
+        <header>
+            <nav class="navbar">
+                <div class="nav-left">
+                    <img src="../image/BClogo.png" alt="Logo" class="logo">
+                    <span class="brand">Bahona College</span>
+                </div>
+                <div class="nav-right">
+                    <span><a href="../index.html" class="nav-item desktop">ID PAGE</a></span>
+                    <span><a href="./file1.html" class="nav-item desktop">FILES</a></span>
+                </div>
+            </nav>
+        </header>
     </header>
+    <div class="filebody">
+        <h1>Student Records Management</h1>
 
-    <!-- Search and Action Buttons -->
-    <!-- Student Management Section -->
-    <h1>Student Records Management</h1>
-
-    <div class="top-container">
-        <input type="text" id="searchInput" placeholder="Search by roll number or name">
-        <button onclick="searchStudent()" class="btn primary">Search</button>
-        <button id="exportExcel" class="export-btn">Export to Excel</button>
-        <button id="deleteAll" class="delete-btn">Delete All Records</button>
-    </div>
-    <select id="categoryFilter" onchange="filterByCategory()" class="dropdown-filter">
-        <option value="">🔎 Filter by Category</option>
-        <option value="HS/Arts">HS - Arts</option>
-        <option value="HS/Science">HS - Science</option>
-        <option value="Degree/BA">Degree - BA</option>
-        <option value="Degree/BSc">Degree - BSc</option>
-    </select>
+        <div class="top-container">
+            <input type="text" id="searchInput" placeholder="Search by roll number or name">
+            <button onclick="searchStudent()" class="btn primary">Search</button>
+            <button id="exportExcel" class="export-btn">Export to Excel</button>
+            <button id="deleteAll" class="delete-btn">Delete All Records</button>
+        </div>
+        <select id="categoryFilter" onchange="filterByCategory()" class="dropdown-filter">
+            <option value="">🔎 Filter by Category</option>
+            <option value="HS/Arts">HS - Arts</option>
+            <option value="HS/Science">HS - Science</option>
+            <option value="Degree/BA">Degree - BA</option>
+            <option value="Degree/BSc">Degree - BSc</option>
+        </select>
 
 
-    <div class="student-list-container">
-        <h3>Student Records</h3>
-        <div id="studentList" class="student-list">
-            <!-- Student list will be populated from JavaScript -->
-            <p class="loading">Loading student records...</p>
+        <div class="student-list-container">
+            <h3>Student Records</h3>
+            <div id="studentList" class="student-list">
+                <!-- Student list will be populated from JavaScript -->
+                <p class="loading">Loading student records...</p>
+            </div>
         </div>
     </div>
 
