@@ -85,8 +85,20 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 
 // Get all students
-app.get('/api/students', (_req, res) => {
-    db.all('SELECT id, roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, category, createdAt FROM students ORDER BY id DESC', [], (err, rows) => {
+app.get('/api/students', (req, res) => {
+    const category = req.query.category;
+
+    let query = 'SELECT id, roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, category, createdAt FROM students';
+    const params = [];
+
+    if (category) {
+        query += ' WHERE category = ?';
+        params.push(category);
+    }
+
+    query += ' ORDER BY id DESC';
+
+    db.all(query, params, (err, rows) => {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
@@ -219,19 +231,30 @@ app.delete('/api/students/:id', (req, res) => {
 });
 
 // Delete all students
-app.delete('/api/students', (_req, res) => {
-    db.run('DELETE FROM students', function (err) {
+app.delete('/api/students', (req, res) => {
+    const category = req.query.category;
+
+    let query = 'DELETE FROM students';
+    const params = [];
+
+    if (category) {
+        query += ' WHERE category = ?';
+        params.push(category);
+    }
+
+    db.run(query, params, function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             return;
         }
 
         res.json({
-            message: 'All students deleted successfully',
+            message: category ? `Students from category '${category}' deleted` : 'All students deleted successfully',
             deletedCount: this.changes
         });
     });
 });
+
 
 // Export data to JSON
 app.get('/api/export/json', (_req, res) => {

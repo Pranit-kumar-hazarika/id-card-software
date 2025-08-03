@@ -76,21 +76,34 @@ function displayStudents(students) {
 
 // Delete all students
 async function deleteAllStudents() {
-    if (confirm("Are you sure you want to delete all student records? This cannot be undone.")) {
+    const selectedCategory = document.getElementById("categoryFilter").value;
+
+    let confirmationMessage = "Are you sure you want to delete ";
+    confirmationMessage += selectedCategory
+        ? `all student records from "${selectedCategory}" category?`
+        : "ALL student records? This cannot be undone.";
+
+    if (confirm(confirmationMessage)) {
         try {
-            const response = await fetch(`http://localhost:3000/api/students`, {
+            let url = `http://localhost:3000/api/students`;
+            if (selectedCategory) {
+                url += `?category=${encodeURIComponent(selectedCategory)}`;
+            }
+
+            const response = await fetch(url, {
                 method: 'DELETE'
             });
 
             if (!response.ok) {
-                throw new Error('Failed to delete all students');
+                throw new Error('Failed to delete student records');
             }
 
             const result = await response.json();
             alert(`Success: ${result.deletedCount} student records deleted`);
-            loadStudents();
+            loadStudents(selectedCategory);
+
         } catch (error) {
-            console.error('Error deleting all students:', error);
+            console.error('Error deleting students:', error);
             alert('Failed to delete student records');
         }
     }
@@ -330,7 +343,14 @@ async function searchStudent() {
 // Export student data to Excel
 async function exportToExcel() {
     try {
-        const response = await fetch(`http://localhost:3000/api/students`);
+        const selectedCategory = document.getElementById("categoryFilter").value;
+        let url = `http://localhost:3000/api/students`;
+
+        if (selectedCategory) {
+            url += `?category=${encodeURIComponent(selectedCategory)}`;
+        }
+
+        const response = await fetch(url);
         const students = await response.json();
 
         if (students.length === 0) {
@@ -338,8 +358,7 @@ async function exportToExcel() {
             return;
         }
 
-        // Prepare student data with headers
-        let studentData = students.map(student => ({
+        const studentData = students.map(student => ({
             "Roll Number": student.roll,
             "Name": student.name,
             "Father Name": student.fathername,
@@ -347,16 +366,16 @@ async function exportToExcel() {
             "Blood Group": student.bloodGroup,
             "Contact Number": student.contactNumber,
             "Date of Issue": student.issueDate,
-            "Session": student.session
+            "Session": student.session,
+            "Category": student.category
         }));
 
-        // Create Excel worksheet
-        let worksheet = XLSX.utils.json_to_sheet(studentData);
-        let workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(studentData);
+        const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
 
-        // Write Excel file
-        XLSX.writeFile(workbook, "students.xlsx");
+        XLSX.writeFile(workbook, selectedCategory ? `${selectedCategory}-students.xlsx` : "students.xlsx");
+
     } catch (error) {
         console.error('Error exporting to Excel:', error);
         alert('Failed to export student records');
