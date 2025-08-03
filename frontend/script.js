@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const signatureHolder = document.getElementById("signature-holder");
     const barcode = document.getElementById("barcode");
     const idSession = document.getElementById("id-session");
-    const studentCategory = document.getElementById("studentCategory").value;
 
 
     const generateBtn = document.getElementById("generate");
@@ -142,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const issueDate = issueDateInput.value.trim();
         const session = sessionInput.value.trim();
         const studentCategory = document.getElementById("studentCategory").value;
+        
         console.log("Saving student with category:", studentCategory);
 
         if (!roll || !name || !fathername || !course ||

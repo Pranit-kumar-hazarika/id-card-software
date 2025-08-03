@@ -131,7 +131,7 @@ app.get('/api/students/search', (req, res) => {
 
 // Create a new student
 app.post('/api/students', (req, res) => {
-    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, studentCategory } = req.body;
+    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category } = req.body;
 
     // Validate required fields
     if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
@@ -149,7 +149,7 @@ app.post('/api/students', (req, res) => {
   (roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category) 
   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, studentCategory],
+    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category],
         function (err) {
             if (err) {
                 if (err.message.includes('UNIQUE constraint failed')) {
