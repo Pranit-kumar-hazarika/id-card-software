@@ -108,6 +108,14 @@
     color: #333;
 }
 
+/* Blood Group Below Date of Issue */
+.blood-group-section {
+    text-align: center;
+    font-size: 5px;
+    margin-top: 2px;
+    color: #333;
+}
+
 /* Student Details */
 .details {
     text-align: left;

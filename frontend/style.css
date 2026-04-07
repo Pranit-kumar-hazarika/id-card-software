@@ -303,6 +303,13 @@ button:hover {
     color: #333;
 }
 
+.blood-group-section {
+    text-align: center;
+    font-size: 5px;
+    margin-top: 2px;
+    color: #333;
+}
+
 
 .details {
     text-align: left;

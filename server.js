@@ -61,6 +61,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
                     }
 
                     const hasCategory = columns.some(col => col.name === "category");
+                    const hasEnrollmentNo = columns.some(col => col.name === "enrollmentNo");
 
                     if (!hasCategory) {
                         db.run("ALTER TABLE students ADD COLUMN category TEXT", (err) => {
@@ -72,6 +73,18 @@ const db = new sqlite3.Database(dbPath, (err) => {
                         });
                     } else {
                         console.log("Category column already exists.");
+                    }
+
+                    if (!hasEnrollmentNo) {
+                        db.run("ALTER TABLE students ADD COLUMN enrollmentNo TEXT", (err) => {
+                            if (err) {
+                                console.error('Failed to add enrollmentNo column:', err.message);
+                            } else {
+                                console.log("Enrollment No column added to students table.");
+                            }
+                        });
+                    } else {
+                        console.log("Enrollment No column already exists.");
                     }
                 });
 
@@ -88,7 +101,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 app.get('/api/students', (req, res) => {
     const category = req.query.category;
 
-    let query = 'SELECT id, roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, category, createdAt FROM students';
+    let query = 'SELECT id, roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, category, createdAt FROM students';
     const params = [];
 
     if (category) {
@@ -143,10 +156,10 @@ app.get('/api/students/search', (req, res) => {
 
 // Create a new student
 app.post('/api/students', (req, res) => {
-    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category } = req.body;
+    const { roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, photo, signature, category } = req.body;
 
     // Validate required fields
-    if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
+    if (!roll || !name || !fathername || !course || !enrollmentNo || !bloodGroup || !contactNumber || !issueDate || !session) {
         res.status(400).json({ error: 'All fields are required' });
         return;
     }
@@ -158,10 +171,10 @@ app.post('/api/students', (req, res) => {
     }
 
     const query = `INSERT INTO students 
-  (roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category) 
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  (roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, photo, signature, category) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, category],
+    db.run(query, [roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, photo, signature, category],
         function (err) {
             if (err) {
                 if (err.message.includes('UNIQUE constraint failed')) {
@@ -182,21 +195,21 @@ app.post('/api/students', (req, res) => {
 // Update student
 app.put('/api/students/:id', (req, res) => {
     const { id } = req.params;
-    const { roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature } = req.body;
+    const { roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, photo, signature } = req.body;
 
     // Validate required fields
-    if (!roll || !name || !fathername || !course || !bloodGroup || !contactNumber || !issueDate || !session) {
+    if (!roll || !name || !fathername || !course || !enrollmentNo || !bloodGroup || !contactNumber || !issueDate || !session) {
         res.status(400).json({ error: 'All fields are required' });
         return;
     }
 
     const query = `UPDATE students SET 
-                  roll = ?, name = ?, fathername = ?, course = ?, 
+                  roll = ?, name = ?, fathername = ?, course = ?, enrollmentNo = ?,
                   bloodGroup = ?, contactNumber = ?, issueDate = ?, session = ?,
                   photo = ?, signature = ?
                   WHERE id = ?`;
 
-    db.run(query, [roll, name, fathername, course, bloodGroup, contactNumber, issueDate, session, photo, signature, id], function (err) {
+    db.run(query, [roll, name, fathername, course, enrollmentNo, bloodGroup, contactNumber, issueDate, session, photo, signature, id], function (err) {
         if (err) {
             res.status(500).json({ error: err.message });
             return;

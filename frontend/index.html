@@ -23,10 +23,7 @@
             </div>
         </nav>
     </header>
-
-    <!-- Student ID Generator Section -->
     <section class="container">
-        <!-- Input Form -->
         <div class="form-section">
             <h2>Student Details</h2>
             <p>Fill in the details to generate your digital student ID.</p>
@@ -41,11 +38,11 @@
                 </select>
             </div>
 
-
             <input type="text" id="roll" placeholder="Enter student roll number" required>
             <input type="text" id="name" placeholder="Enter student name" required>
             <input type="text" id="fathername" placeholder="Enter Father's name" required>
             <input type="text" id="course" placeholder="Enter course" required>
+            <input type="text" id="enrollment-no" placeholder="Enter Enrollment No" required>
             <input type="text" id="blood-group" placeholder="Enter Blood Group" required>
             <input type="text" id="contact-number" placeholder="Enter Contact Number" required>
             <label for="text">Date of Issue:</label>
@@ -58,7 +55,6 @@
 
             <label for="text">Upload Signature:</label>
             <input type="file" id="signature" accept="image/*">
-
 
             <div class="buttons">
                 <button id="reset">Reset</button>
@@ -89,6 +85,10 @@
                     <div class="issue-date">
                         <strong>Date of Issue:</strong> <span id="id-issue-date">XX-XX-XXXX</span>
                     </div>
+                    <!-- Blood Group Below Date of Issue -->
+                    <div class="blood-group-section">
+                        <strong>Blood Group:</strong> <span id="id-blood-group-display">XXXXX</span>
+                    </div>
                 </div>
 
                 <!-- Student Details -->
@@ -98,7 +98,7 @@
                     <p><strong>Name</strong>: <span id="id-name">XXXXX</span></p>
                     <p><strong>Father's Name</strong>: <span id="id-fathername">XXXXX</span></p>
                     <p><strong>Course</strong>: <span id="id-course">XXXXX</span></p>
-                    <p><strong>Blood Group</strong>: <span id="id-blood-group">XXXXX</span></p>
+                    <p><strong>Enrollment No</strong>: <span id="id-enrollment-no">XXXXX</span></p>
                     <p><strong>Contact Number</strong>: <span id="id-contact-number">XXXXX</span></p>
                 </div>
             </div>

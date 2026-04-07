@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameInput = document.getElementById("name");
     const fathernameInput = document.getElementById("fathername");
     const courseInput = document.getElementById("course");
+    const enrollmentNoInput = document.getElementById("enrollment-no");
     const bloodGroupInput = document.getElementById("blood-group");
     const contactNumberInput = document.getElementById("contact-number");
     const issueDateInput = document.getElementById("issue-date");
@@ -14,7 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const idName = document.getElementById("id-name");
     const idFathername = document.getElementById("id-fathername");
     const idCourse = document.getElementById("id-course");
-    const idBloodGroup = document.getElementById("id-blood-group");
+    const idEnrollmentNo = document.getElementById("id-enrollment-no");
+    const idBloodGroupDisplay = document.getElementById("id-blood-group-display");
     const idContactNumber = document.getElementById("id-contact-number");
     const idIssueDate = document.getElementById("id-issue-date");
     const idPhoto = document.getElementById("id-photo");
@@ -36,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nameInput.value.trim() === "" ||
             fathernameInput.value.trim() === "" ||
             courseInput.value.trim() === "" ||
+            enrollmentNoInput.value.trim() === "" ||
             bloodGroupInput.value.trim() === "" ||
             contactNumberInput.value.trim() === "" ||
             issueDateInput.value.trim() === "" ||
@@ -55,7 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         idName.textContent = nameInput.value;
         idFathername.textContent = fathernameInput.value;
         idCourse.textContent = courseInput.value;
-        idBloodGroup.textContent = bloodGroupInput.value;
+        idEnrollmentNo.textContent = enrollmentNoInput.value;
+        idBloodGroupDisplay.textContent = bloodGroupInput.value;
         idContactNumber.textContent = contactNumberInput.value;
         idIssueDate.textContent = issueDateInput.value;
         idSession.innerHTML = `SESSION<br>${sessionInput.value.trim()}`;
@@ -110,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nameInput.value = "";
         fathernameInput.value = "";
         courseInput.value = "";
+        enrollmentNoInput.value = "";
         bloodGroupInput.value = "";
         contactNumberInput.value = "";
         issueDateInput.value = "";
@@ -121,7 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
         idName.textContent = "XXXXX";
         idFathername.textContent = "XXXXX";
         idCourse.textContent = "XXXXX";
-        idBloodGroup.textContent = "XXXXX";
+        idEnrollmentNo.textContent = "XXXXX";
+        idBloodGroupDisplay.textContent = "XXXXX";
         idContactNumber.textContent = "XXXXX";
         idIssueDate.textContent = "XX-XX-XXXX";
         idSession.innerHTML = "SESSION<br>YYYY-YY";
@@ -136,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = nameInput.value.trim();
         const fathername = fathernameInput.value.trim();
         const course = courseInput.value.trim();
+        const enrollmentNo = enrollmentNoInput.value.trim();
         const bloodGroup = bloodGroupInput.value.trim();
         const contactNumber = contactNumberInput.value.trim();
         const issueDate = issueDateInput.value.trim();
@@ -144,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         console.log("Saving student with category:", studentCategory);
 
-        if (!roll || !name || !fathername || !course ||
+        if (!roll || !name || !fathername || !course || !enrollmentNo ||
             !bloodGroup || !contactNumber || !issueDate || !session || !studentCategory) {
             alert("Please fill in all fields before printing!");
             return;
@@ -164,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     name,
                     fathername,
                     course,
+                    enrollmentNo,
                     bloodGroup,
                     contactNumber,
                     issueDate,

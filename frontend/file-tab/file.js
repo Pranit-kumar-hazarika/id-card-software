@@ -166,6 +166,7 @@ async function viewStudent(id) {
                         <p><strong>Name:</strong> ${studentDetails.name}</p>
                         <p><strong>Father's Name:</strong> ${studentDetails.fathername}</p>
                         <p><strong>Course:</strong> ${studentDetails.course}</p>
+                        <p><strong>Enrollment No:</strong> ${studentDetails.enrollmentNo}</p>
                         <p><strong>Blood Group:</strong> ${studentDetails.bloodGroup}</p>
                         <p><strong>Contact Number:</strong> ${studentDetails.contactNumber}</p>
                         <p><strong>Issue Date:</strong> ${studentDetails.issueDate}</p>
@@ -254,6 +255,10 @@ async function printStudent(id) {
                             <div class="issue-date">
                                 <strong>Date of Issue:</strong> <span id="id-issue-date">${studentDetails.issueDate}</span>
                             </div>
+                            <!-- Blood Group Below Date of Issue -->
+                            <div class="blood-group-section">
+                                <strong>Blood Group:</strong> <span id="id-blood-group-display">${studentDetails.bloodGroup}</span>
+                            </div>
                         </div>
 
                         <!-- Student Details -->
@@ -263,7 +268,7 @@ async function printStudent(id) {
                             <p><strong>Name</strong>: <span id="id-name">${studentDetails.name}</span></p>
                             <p><strong>Father's Name</strong>: <span id="id-fathername">${studentDetails.fathername}</span></p>
                             <p><strong>Course</strong>: <span id="id-course">${studentDetails.course}</span></p>
-                            <p><strong>Blood Group</strong>: <span id="id-blood-group">${studentDetails.bloodGroup}</span></p>
+                            <p><strong>Enrollment No</strong>: <span id="id-enrollment-no">${studentDetails.enrollmentNo}</span></p>
                             <p><strong>Contact Number</strong>: <span id="id-contact-number">${studentDetails.contactNumber}</span></p>
                         </div>
                     </div>
@@ -363,6 +368,7 @@ async function exportToExcel() {
             "Name": student.name,
             "Father Name": student.fathername,
             "Course": student.course,
+            "Enrollment No": student.enrollmentNo,
             "Blood Group": student.bloodGroup,
             "Contact Number": student.contactNumber,
             "Date of Issue": student.issueDate,
